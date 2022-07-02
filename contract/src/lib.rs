@@ -43,7 +43,6 @@ impl Contract {
     #[init]
     pub fn new_init(
         owner_id: AccountId,
-
         nft_name: String,
         nft_symbol: String,
         icon: String,
