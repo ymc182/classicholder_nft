@@ -4,24 +4,19 @@ use near_contract_standards::non_fungible_token::metadata::{
 use near_contract_standards::non_fungible_token::NonFungibleToken;
 use near_contract_standards::non_fungible_token::{Token, TokenId};
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::{LazyOption, UnorderedMap, Vector};
+use near_sdk::collections::LazyOption;
 use near_sdk::json_types::U128;
 use near_sdk::{
-    env, log, near_bindgen, require, AccountId, Balance, BorshStorageKey, PanicOnDefault, Promise,
-    PromiseOrValue, ONE_NEAR,
+    env, near_bindgen, require, AccountId, BorshStorageKey, PanicOnDefault, Promise, PromiseOrValue,
 };
 use std::collections::HashMap;
 mod config;
 mod constants;
 mod mint;
 mod payouts;
-
 mod utils;
 mod views;
-use constants::*;
 use payouts::*;
-
-use utils::*;
 
 // Define the contract structure
 #[near_bindgen]
@@ -41,10 +36,6 @@ enum StorageKey {
     Enumeration,
     Approval,
     Royalties,
-    //Custom
-    Whitelist,
-    FreeMintList,
-    AvailableNft,
 }
 
 #[near_bindgen]
@@ -52,9 +43,7 @@ impl Contract {
     #[init]
     pub fn new_init(
         owner_id: AccountId,
-        mint_price: Balance,
-        wl_price: Option<Balance>,
-        max_supply: u128,
+
         nft_name: String,
         nft_symbol: String,
         icon: String,

@@ -1,11 +1,14 @@
 use super::*;
 use near_contract_standards::non_fungible_token::events;
-use near_sdk::{require, ONE_NEAR};
 
 #[near_bindgen]
 impl Contract {
     #[payable]
     pub fn nft_mint(&mut self, account_id: AccountId) {
+        require!(
+            env::predecessor_account_id() == self.tokens.owner_id,
+            "ERR_UNAUTHORIZED"
+        );
         self.internal_nft_mint(account_id);
     }
     #[payable]

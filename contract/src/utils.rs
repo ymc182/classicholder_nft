@@ -2,7 +2,7 @@ use super::*;
 
 #[near_bindgen]
 impl Contract {}
-pub fn get_random_number(shift_amount: u128) -> u32 {
+pub fn _get_random_number(shift_amount: u128) -> u32 {
     let mut seed = env::random_seed();
 
     let seed_len = seed.len();
